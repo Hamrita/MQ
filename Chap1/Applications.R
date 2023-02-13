@@ -23,14 +23,23 @@ colnames(wage1)
 # régression linéaire simple: wage=f(educ)
 
 reg1=lm(wage ~ educ, data=wage1)
+reg1
+
+# intervalles de confiances des paramètres
+
+confint(reg1)
+
+
 ss1=summary(reg1)
+
+names(ss1)
+
 ss1$coefficients # estimation
 
 # Graphique
 
 plot(wage1$educ,wage1$wage)
-abline(a=ss1$coefficients[1,1], b=ss1$coefficients[2,1], 
-          lwd=2, col=2)
+abline(coef(reg1),lwd=2, col=2)
 
 # les résidus
 u=ss1$residuals
@@ -76,3 +85,25 @@ library(car)
 # tester: beta_0+beta_1=0.5
 
 linearHypothesis(reg1, "(Intercept)+educ=0.5")
+
+############################################
+
+# Greene, W.H. (2003). Econometric Analysis, 
+#  8th edition. Upper Saddle River, NJ: Prentice Hall
+
+# Exemple 2.1 (p 14): fonction de consommation
+
+# installer la librairie "AER" puis la charger
+# install.packages(AER)
+
+library(AER)
+
+data("USConsump1950")
+US=as.data.frame(USConsump1950)
+reg2= lm(expenditure ~ income, data = US)
+ss2=summary(reg2)
+ss2$coefficients
+
+plot(US$income, US$expenditure)
+abline(coef(reg2), lwd=2, col=2)
+confint(reg2)
