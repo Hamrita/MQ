@@ -44,7 +44,7 @@ round(sum(u),10) # arrondissement à 10^-10 prés
 
 round(sum(wage1$educ*u),10)
 
-# sum(u*(y.hate-y.bar))
+# sum(u*(y.hate-y.bar))=0
 
 round(sum(u*(reg1$fitted.values-mean(wage1$wage)) ),10)
 
