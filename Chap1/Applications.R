@@ -107,3 +107,56 @@ ss2$coefficients
 plot(US$income, US$expenditure)
 abline(coef(reg2), lwd=2, col=2)
 confint(reg2)
+
+
+########################################
+# Régis Bourbonnais (2018): Économétrie, 10 ieme édition
+
+# Exercice 1 p 15 (fonction de consommation)
+
+rev=read.table("https://raw.githubusercontent.com/Hamrita/MQ/main/Data/C2EX1.csv",
+               h=T,sep=";")
+Y=rev$REVENU
+
+# calcul de la consommation: c0=1000 et c=0.8; C=c0+c*Y +e
+
+set.seed(2)
+e=rnorm(10,0, sqrt(20000))
+
+Cons_t= 1000+0.8*Y # consommation théorique
+
+Cons=1000+0.8*Y+e  # consommation observée
+
+tab=cbind(Revenu=Y, "Consommation théorique"=Cons_t, "Aléa"=e,
+          "Consommation observée"=Cons)
+tab
+mean(e)
+sd(e)
+
+# simulation
+
+B=150
+a1=NULL
+for(i in 1:B){
+  e=rnorm(10,0,sqrt(20000))
+  Ct=Cons_t+e
+  reg=lm(Ct~Y)
+  a1[i]=coef(reg)[2]
+}
+
+# histogramme de la distribution de a1
+
+hist(a1)
+
+reg3=lm(Cons~Y)
+coef(reg3)
+plot(Y,Cons, pch=16)
+abline(coef(reg3), lwd=2, col=2)
+
+ss3=summary(reg3)
+ss3$coefficients
+confint(reg3) # IC des paramètres
+
+# tableau d'analyse de la variance
+
+aov(reg3)
