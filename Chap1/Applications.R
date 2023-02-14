@@ -73,7 +73,7 @@ ss1$sigma^2
 
 # Tableau d'analyse de la variance
 
-aov(reg1)
+summary(aov(reg1))
 
 # tests statistiques
 
@@ -159,4 +159,4 @@ confint(reg3) # IC des paramètres
 
 # tableau d'analyse de la variance
 
-aov(reg3)
+summary(aov(reg3))
